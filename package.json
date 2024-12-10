@@ -10,5 +10,8 @@
   "license": "ISC",
   "devDependencies": {
     "esbuild": "0.24.0"
+  },
+  "dependencies": {
+    "gsap": "^3.12.5"
   }
 }
