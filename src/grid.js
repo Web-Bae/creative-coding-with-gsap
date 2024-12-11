@@ -1,16 +1,19 @@
 import gsap from "gsap";
 
-// Block class remains unchanged
+// Single block in the grid
 class Block {
   constructor(x, y, width) {
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = width;
+
     this.scale = 0;
     this.rotation = 0;
+
     this.centerX = x + width / 2;
     this.centerY = y + width / 2;
+
     this.quickToScale = gsap.quickTo(this, "scale", { duration: 0.3 });
     this.quickToRotation = gsap.quickTo(this, "rotation", { duration: 0.3 });
   }
@@ -46,19 +49,14 @@ export class Grid {
     this.initResizeObserver();
   }
 
-  initResizeObserver() {
-    // Create a ResizeObserver instance
-    this.resizeObserver = new ResizeObserver(() => this.handleResize());
-
-    // Start observing the canvas
-    this.resizeObserver.observe(this.canvas);
-  }
-
   setup() {
     this.canvas = document.querySelector(".hero_canvas");
-    this.ctx = this.canvas.getContext("2d");
+    if (!this.canvas) {
+      console.error("Canvas element not found");
+      return;
+    }
 
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.ctx = this.canvas.getContext("2d");
 
     this.canvas.width = this.canvas.offsetWidth;
     this.canvas.height = this.canvas.offsetHeight;
@@ -70,6 +68,20 @@ export class Grid {
     this.createBlocks();
     this.setupEvents();
     this.loadingAnimation();
+  }
+
+  initResizeObserver() {
+    // Ensure canvas exists before initializing observer
+    if (!this.canvas) {
+      console.error("Canvas not available for ResizeObserver");
+      return;
+    }
+
+    this.resizeObserver = new ResizeObserver(() => {
+      this.handleResize();
+    });
+
+    this.resizeObserver.observe(this.canvas);
   }
 
   createBlocks() {
@@ -92,6 +104,7 @@ export class Grid {
       const rect = this.canvas.getBoundingClientRect();
       const mouseX = e.clientX - rect.left;
       const mouseY = e.clientY - rect.top;
+
       this.blocks.forEach((block) => block.handleMouse(mouseX, mouseY));
     };
 
@@ -124,20 +137,25 @@ export class Grid {
   }
 
   handleResize() {
+    console.log("Resizing grid...");
     this.canvas.width = this.canvas.offsetWidth;
     this.canvas.height = this.canvas.offsetHeight;
+
     this.blocks = [];
     this.createBlocks();
+
+    this.loadingAnimation();
     this.draw();
   }
 
-  // Add a destroy method for cleanup
   destroy() {
+    console.log("Destroying Grid...");
     if (this.resizeObserver) {
       this.resizeObserver.disconnect();
     }
     this.canvas.removeEventListener("mousemove", this.mouseMoveHandler);
     this.canvas.removeEventListener("mouseout", this.mouseOutHandler);
     gsap.ticker.remove(() => this.draw());
+    this.blocks = [];
   }
 }
