@@ -10,8 +10,6 @@ export class ColorModeButton {
   }
 
   handleClick = () => {
-    console.log("Color mode button clicked");
-
     // Toggle the color mode
     const currentColorMode = document.body.getAttribute("data-theme");
     const newColorMode = currentColorMode === "light" ? "dark" : "light";

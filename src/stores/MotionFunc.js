@@ -4,9 +4,6 @@ let reduceMotion = mediaQueryList.matches;
 
 function handlePreferenceChange(event) {
   reduceMotion = event.matches;
-  console.log(
-    `Motion preference changed to: ${reduceMotion ? "Reduced" : "Default"}`
-  );
 }
 
 mediaQueryList.addEventListener("change", handlePreferenceChange);

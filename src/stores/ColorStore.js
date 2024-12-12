@@ -28,8 +28,6 @@ class ColorStore {
         "--theme--border"
       ),
     };
-
-    console.log(this.colors);
   }
 }
 

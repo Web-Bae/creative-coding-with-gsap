@@ -24,8 +24,6 @@ class App {
   }
 
   init() {
-    console.log("App Initializing...");
-
     // Clock
     this.clock = new Clock(".hero_clock");
 
@@ -61,8 +59,6 @@ class App {
   }
 
   handleColorModeChange() {
-    console.log("Color mode changed, reinitializing necessary components...");
-
     // Update the grid
     if (this.grid) {
       this.grid.destroy();
@@ -76,14 +72,11 @@ class App {
     this.toolkit = new ToolkitText(".toolkit_p");
 
     // Any other components that depend on color mode changes can also be updated here
-    console.log("Color mode-related reinitialization complete.");
   }
 
   listenToMotionPreferenceChanges() {
     addMotionPreferenceListener(() => {
-      console.log("addMotionPreferenceListener from index.js");
       this.init();
-      console.log("reinit everything");
     });
   }
 
@@ -91,7 +84,6 @@ class App {
     document.fonts.ready.then(() => {
       const imgLoad = imagesLoaded("body");
       imgLoad.on("always", () => {
-        console.log("Fonts and images are ready");
         this.init();
         this.listenToMotionPreferenceChanges();
       });

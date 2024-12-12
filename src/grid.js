@@ -47,7 +47,6 @@ class Block {
 
 export class Grid {
   constructor() {
-    console.log("Grid constructor");
     this.setup();
     this.initResizeObserver();
   }
@@ -146,7 +145,6 @@ export class Grid {
   }
 
   handleResize() {
-    console.log("Resizing grid...");
     this.canvas.width = this.canvas.offsetWidth;
     this.canvas.height = this.canvas.offsetHeight;
 
@@ -158,7 +156,6 @@ export class Grid {
   }
 
   destroy() {
-    console.log("Destroying Grid...");
     if (this.resizeObserver) {
       this.resizeObserver.disconnect();
     }

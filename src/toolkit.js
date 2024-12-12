@@ -7,7 +7,6 @@ import { getMotionPreference } from "./stores/MotionFunc";
 
 export class ToolkitText {
   constructor(selector) {
-    console.log("Creating toolkit text");
     gsap.registerPlugin(ScrollTrigger);
     this.element = document.querySelector(selector);
 
@@ -26,7 +25,6 @@ export class ToolkitText {
   }
 
   splitText() {
-    console.log("Splitting text");
     const splitTypeObject = new SplitType(this.element, {
       types: "lines",
     });
@@ -130,7 +128,6 @@ export class ToolkitText {
   }
 
   destroy() {
-    console.log("Destroying toolkit text");
     // Kill all ScrollTriggers for this element
     ScrollTrigger.getAll().forEach((st) => {
       if (st.trigger === this.element) {

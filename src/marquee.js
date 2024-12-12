@@ -3,7 +3,6 @@ import { getMotionPreference } from "./stores/MotionFunc";
 
 export class Marquee {
   constructor(rootElement) {
-    console.log("Marquee initialized");
     this.marquee = rootElement;
     this.marqueeInner = this.marquee.querySelector(".marquee_inner");
     this.animation = null;
@@ -75,7 +74,6 @@ export class Marquee {
       onRepeat: () => {
         // Immediately reset position when animation repeats
         gsap.set(this.wrapper, { x: 0 });
-        console.log("repeat");
       },
     });
   }
