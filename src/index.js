@@ -8,6 +8,8 @@ import { ImageRevealSection } from "./imageReveal";
 
 import { reveal } from "./helpers/reveal";
 
+import imagesLoaded from "imagesloaded";
+
 class App {
   constructor() {
     this.clock = null;
@@ -79,7 +81,11 @@ class App {
 
   start() {
     document.fonts.ready.then(() => {
-      this.init();
+      const imgLoad = imagesLoaded("body");
+      imgLoad.on("always", () => {
+        console.log("All images loaded");
+        this.init();
+      });
     });
   }
 }
