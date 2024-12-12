@@ -4,6 +4,7 @@ import { Grid } from "./grid";
 import { Heading } from "./heading";
 import { ToolkitText } from "./toolkit";
 import { ColorModeButton } from "./colorModeButton";
+import { ImageRevealSection } from "./imageReveal";
 
 import { reveal } from "./helpers/reveal";
 
@@ -15,6 +16,7 @@ class App {
     this.heading = null;
     this.toolkit = null;
     this.colorModeButton = null;
+    this.imageReveal = null;
   }
 
   init() {
@@ -39,6 +41,12 @@ class App {
     // ToolkitText
     if (this.toolkit) this.toolkit.destroy();
     this.toolkit = new ToolkitText(".toolkit_p");
+
+    // Image Reveal Section
+    this.imageReveal = new ImageRevealSection(
+      ".images_thumbnails_list",
+      ".images_full_list"
+    );
 
     // Initialize ColorModeButton and pass a reference to the handler
     this.colorModeButton = new ColorModeButton(() =>
