@@ -1,5 +1,6 @@
 import gsap from "gsap";
 import SplitType from "split-type";
+import { getMotionPreference } from "./stores/MotionFunc";
 
 export class Heading {
   constructor(element) {
@@ -10,7 +11,9 @@ export class Heading {
   setup() {
     this.chars = this.splitText(this.heading);
     this.createDuplicateChars();
-    this.animateHeading();
+    if (!getMotionPreference()) {
+      this.animateHeading();
+    }
   }
 
   splitText(elementToSplit) {

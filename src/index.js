@@ -6,7 +6,11 @@ import { ToolkitText } from "./toolkit";
 import { ColorModeButton } from "./colorModeButton";
 import { ImageRevealSection } from "./imageReveal";
 
+import { addMotionPreferenceListener } from "./stores/MotionFunc";
+
 import { reveal } from "./helpers/reveal";
+
+import imagesLoaded from "imagesLoaded";
 
 class App {
   constructor() {
@@ -75,11 +79,22 @@ class App {
     console.log("Color mode-related reinitialization complete.");
   }
 
-  listenToMotionPreferenceChanges() {}
+  listenToMotionPreferenceChanges() {
+    addMotionPreferenceListener(() => {
+      console.log("addMotionPreferenceListener from index.js");
+      this.init();
+      console.log("reinit everything");
+    });
+  }
 
   start() {
     document.fonts.ready.then(() => {
-      this.init();
+      const imgLoad = imagesLoaded("body");
+      imgLoad.on("always", () => {
+        console.log("Fonts and images are ready");
+        this.init();
+        this.listenToMotionPreferenceChanges();
+      });
     });
   }
 }

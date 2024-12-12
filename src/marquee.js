@@ -1,4 +1,5 @@
 import gsap from "gsap";
+import { getMotionPreference } from "./stores/MotionFunc";
 
 export class Marquee {
   constructor(rootElement) {
@@ -9,7 +10,11 @@ export class Marquee {
 
     this.updateDimensions();
     this.setup();
-    this.animate();
+    if (getMotionPreference()) {
+      return;
+    } else {
+      this.animate();
+    }
 
     this.resizeObserver = new ResizeObserver(this.handleResize.bind(this));
     this.resizeObserver.observe(this.marquee);

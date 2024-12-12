@@ -3,6 +3,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitType from "split-type";
 
 import colorStore from "./stores/ColorStore";
+import { getMotionPreference } from "./stores/MotionFunc";
 
 export class ToolkitText {
   constructor(selector) {
@@ -15,6 +16,9 @@ export class ToolkitText {
     }
 
     const splitTypeObj = this.splitText();
+    if (getMotionPreference()) {
+      return;
+    }
 
     this.applyStyles(splitTypeObj);
     this.addBlocks(splitTypeObj);

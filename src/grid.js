@@ -1,6 +1,7 @@
 import gsap from "gsap";
 
 import colorStore from "./stores/ColorStore";
+import { getMotionPreference } from "./stores/MotionFunc";
 
 // Single block in the grid
 class Block {
@@ -102,25 +103,31 @@ export class Grid {
   }
 
   setupEvents() {
-    this.mouseMoveHandler = (e) => {
-      const rect = this.canvas.getBoundingClientRect();
-      const mouseX = e.clientX - rect.left;
-      const mouseY = e.clientY - rect.top;
+    if (!getMotionPreference()) {
+      this.mouseMoveHandler = (e) => {
+        const rect = this.canvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
 
-      this.blocks.forEach((block) => block.handleMouse(mouseX, mouseY));
-    };
+        this.blocks.forEach((block) => block.handleMouse(mouseX, mouseY));
+      };
 
-    this.mouseOutHandler = () => {
-      this.blocks.forEach((block) => block.handleMouse(-100, -100));
-    };
+      this.mouseOutHandler = () => {
+        this.blocks.forEach((block) => block.handleMouse(-100, -100));
+      };
 
-    this.canvas.addEventListener("mousemove", this.mouseMoveHandler);
-    this.canvas.addEventListener("mouseout", this.mouseOutHandler);
+      this.canvas.addEventListener("mousemove", this.mouseMoveHandler);
+      this.canvas.addEventListener("mouseout", this.mouseOutHandler);
+    }
 
     gsap.ticker.add(() => this.draw());
   }
 
   loadingAnimation() {
+    if (getMotionPreference()) {
+      gsap.set(this.blocks, { scale: 1 });
+      return;
+    }
     gsap.to(this.blocks, {
       scale: 1,
       rotation: 360,

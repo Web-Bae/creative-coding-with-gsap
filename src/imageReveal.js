@@ -1,5 +1,6 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { getMotionPreference } from "./stores/MotionFunc";
 
 export class ImageRevealSection {
   constructor(thumbnailListSelector, fullImageListSelector) {
@@ -8,6 +9,9 @@ export class ImageRevealSection {
 
     if (!this.thumbnailList || !this.fullImageList) {
       throw new Error("ImageRevealSection: Error selecting lists");
+    }
+    if (getMotionPreference()) {
+      return;
     }
     this.createAnimation();
   }
