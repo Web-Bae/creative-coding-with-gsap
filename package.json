@@ -4,11 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "esbuild src/index.js --watch --bundle --minify --outfile=dist/index.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "esbuild": "0.24.0"
+  },
+  "dependencies": {
+    "gsap": "^3.12.5",
+    "split-type": "^0.3.4"
   }
 }
